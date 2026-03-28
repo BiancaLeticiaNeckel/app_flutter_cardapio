@@ -36,6 +36,7 @@ class EditarItemPage extends StatelessWidget {
               decoration: InputDecoration(labelText: "Descrição"),
             ),
             SizedBox(height: 20),
+
             ElevatedButton(
               onPressed: () async {
                 item.nome = nomeCtrl.text;
@@ -49,7 +50,7 @@ class EditarItemPage extends StatelessWidget {
   }
               },
               child: Text("Salvar alterações"),
-            ),
+)
           ],
         ),
       ),

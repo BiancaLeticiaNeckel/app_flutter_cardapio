@@ -26,13 +26,13 @@ class CardapioService {
 
   Future<ItemCardapio> atualizar(ItemCardapio item) async {
     final response = await _dio.put(
-      '${item.id}',
+      '/${item.id}',
       data: item.toJson(),
     );
     return ItemCardapio.fromJson(response.data);
   }
 
   Future<void> deletar(int id) async {
-    await _dio.delete('$id');
+    await _dio.delete('/$id');
   }
 }
