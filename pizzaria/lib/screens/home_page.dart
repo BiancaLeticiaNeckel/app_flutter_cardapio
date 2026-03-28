@@ -24,7 +24,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Cardápio da Pizzaria")),
+      appBar: AppBar(title: const Text("Cardápio da Pizzaria"), centerTitle: true,),
       body: FutureBuilder<List<ItemCardapio>>(
         future: futureItens,
         builder: (context, snapshot) {
@@ -46,10 +46,16 @@ class HomePageState extends State<HomePage> {
               final item = itens[index];
 
               return ListTile(
-                title: Text(item.nome),
-                subtitle: Text("R\$ ${item.preco.toStringAsFixed(2)}"),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
+                  title: Text(item.nome),
+  subtitle: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text("R\$ ${item.preco.toStringAsFixed(2)}"),
+      Text(item.descricao), // agora mostra a descrição
+    ],
+  ),
+  trailing: Row(
+      mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
                       icon: const Icon(Icons.edit, color: Colors.blue),
@@ -84,7 +90,9 @@ class HomePageState extends State<HomePage> {
             setState(() => futureItens = service.listar());
           });
         },
-        child: const Icon(Icons.add),
+        backgroundColor: Colors.green,     // cor do círculo
+  foregroundColor: Colors.white,     // cor do ícone "+"
+  child: const Icon(Icons.add),
       ),
     );
   }

@@ -36,21 +36,29 @@ class NovoItemPage extends StatelessWidget {
             SizedBox(height: 20),
 
             ElevatedButton(
-              onPressed: () async {
-                await service.adicionar(
-                  ItemCardapio(
-                    nome: nomeCtrl.text,
-                    preco: double.parse(precoCtrl.text),
-                    descricao: descCtrl.text,
-                  ),
-                );
+  onPressed: () async {
+    final navigator = Navigator.of(context); // captura antes
+    final messenger = ScaffoldMessenger.of(context); // captura antes
 
-                    if (context.mounted) {
-      Navigator.pop(context);
+    try {
+      await service.adicionar(
+        ItemCardapio(
+          nome: nomeCtrl.text,
+          preco: double.parse(precoCtrl.text),
+          descricao: descCtrl.text,
+        ),
+      );
+
+      navigator.pop(true); // usa o navigator já capturado
+    } catch (e) {
+      messenger.showSnackBar(
+        SnackBar(content: Text("Erro ao salvar: $e")),
+      );
     }
-              },
-              child: Text("Salvar"),
-            ),
+  },
+  child: Text("Salvar"),
+)
+
           ],
         ),
       ),

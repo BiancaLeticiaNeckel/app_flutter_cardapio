@@ -21,11 +21,11 @@ class ItemCardapio {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'nome': nome,
-      'preco': preco,
-      'descricao': descricao,
-    };
-  }
+  return {
+    if (id != null) 'id': id,   
+    'nome': nome,
+    'preco': preco,
+    'descricao': descricao,
+  };
 }
+  }

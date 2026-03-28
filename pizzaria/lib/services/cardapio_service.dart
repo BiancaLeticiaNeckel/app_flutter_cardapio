@@ -10,7 +10,7 @@ class CardapioService {
     }
 
   Future<List<ItemCardapio>> listar() async {
-    final response = await _dio.get('/');
+    final response = await _dio.get('');
     return (response.data as List)
         .map((e) => ItemCardapio.fromJson(e))
         .toList();
@@ -18,7 +18,7 @@ class CardapioService {
 
   Future<ItemCardapio> adicionar(ItemCardapio item) async {
     final response = await _dio.post(
-      '/',
+      '',
       data: item.toJson(),
     );
     return ItemCardapio.fromJson(response.data);
@@ -26,13 +26,13 @@ class CardapioService {
 
   Future<ItemCardapio> atualizar(ItemCardapio item) async {
     final response = await _dio.put(
-      '/${item.id}',
+      '${item.id}',
       data: item.toJson(),
     );
     return ItemCardapio.fromJson(response.data);
   }
 
   Future<void> deletar(int id) async {
-    await _dio.delete('/$id');
+    await _dio.delete('$id');
   }
 }
