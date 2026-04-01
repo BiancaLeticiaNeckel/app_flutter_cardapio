@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../models/item_cardapio.dart';
 import '../services/cardapio_service.dart';
+import 'package:provider/provider.dart';
+import '../providers/cardapio_provider.dart';
 
 class NovoItemPage extends StatelessWidget {
   NovoItemPage({super.key});
@@ -37,16 +39,22 @@ class NovoItemPage extends StatelessWidget {
 
             ElevatedButton(
   onPressed: () async {
-    final navigator = Navigator.of(context); // captura antes
-    final messenger = ScaffoldMessenger.of(context); // captura antes
+    final navigator = Navigator.of(context); 
+    final messenger = ScaffoldMessenger.of(context); 
 
     try {
-      await service.adicionar(
+      final provider = Provider.of<CardapioProvider>(context, listen: false);
+      
+      await provider.adicionar(
         ItemCardapio(
           nome: nomeCtrl.text,
           preco: double.parse(precoCtrl.text),
           descricao: descCtrl.text,
         ),
+      );
+
+      messenger.showSnackBar(
+      const SnackBar(content: Text("Item salvo com sucesso")),
       );
 
       navigator.pop(true); // usa o navigator já capturado
