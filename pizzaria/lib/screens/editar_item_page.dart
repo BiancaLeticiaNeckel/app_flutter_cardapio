@@ -6,7 +6,7 @@ import '../providers/cardapio_provider.dart';
 class EditarItemPage extends StatelessWidget {
   final ItemCardapio item;
 
-  EditarItemPage({super.key, required this.item});
+  const EditarItemPage({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {

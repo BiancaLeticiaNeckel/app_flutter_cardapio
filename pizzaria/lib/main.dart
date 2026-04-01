@@ -8,7 +8,18 @@ void main() {
   runApp(
     ChangeNotifierProvider(
       create: (_) => CardapioProvider()..carregarItens(),
-      child: MaterialApp(
+      child: const MyApp(),
+    ),
+  );
+}
+
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: const HomePage(),
         routes: {
@@ -24,7 +35,6 @@ void main() {
             backgroundColor: Colors.green, // cor do botão flutuante
           ),
         ),
-      ),
-    ),
-  );
+      );
+  }
 }

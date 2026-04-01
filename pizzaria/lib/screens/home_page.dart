@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<CardapioProvider>(context);
+    final provider = context.watch<CardapioProvider>();
 
     if (provider.carregando) {
       return const Scaffold(
@@ -53,8 +53,8 @@ class HomePage extends StatelessWidget {
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () async {
-                    await provider.deletar(item.id!);
+                  onPressed: () {
+                    provider.deletar(item.id!);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Item deletado com sucesso")),
                     );
