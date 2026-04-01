@@ -1,14 +1,12 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/item_cardapio.dart';
-import '../services/cardapio_service.dart';
+import '../providers/cardapio_provider.dart';
 
 class EditarItemPage extends StatelessWidget {
   final ItemCardapio item;
 
   EditarItemPage({super.key, required this.item});
-
-  final service = CardapioService(Dio());
 
   @override
   Widget build(BuildContext context) {
@@ -17,40 +15,55 @@ class EditarItemPage extends StatelessWidget {
     final descCtrl = TextEditingController(text: item.descricao);
 
     return Scaffold(
-      appBar: AppBar(title: Text("Editar Item")),
+      appBar: AppBar(title: const Text("Editar Item")),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
             TextField(
               controller: nomeCtrl,
-              decoration: InputDecoration(labelText: "Nome"),
+              decoration: const InputDecoration(labelText: "Nome"),
             ),
             TextField(
               controller: precoCtrl,
-              decoration: InputDecoration(labelText: "Preço"),
+              decoration: const InputDecoration(labelText: "Preço"),
               keyboardType: TextInputType.number,
             ),
             TextField(
               controller: descCtrl,
-              decoration: InputDecoration(labelText: "Descrição"),
+              decoration: const InputDecoration(labelText: "Descrição"),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             ElevatedButton(
               onPressed: () async {
-                item.nome = nomeCtrl.text;
-                item.preco = double.parse(precoCtrl.text);
-                item.descricao = descCtrl.text;
+                final navigator = Navigator.of(context);
+                final messenger = ScaffoldMessenger.of(context);
 
-                await service.atualizar(item);
+                try {
+                  // Atualiza os valores do item
+                  item.nome = nomeCtrl.text;
+                  item.preco = double.parse(precoCtrl.text);
+                  item.descricao = descCtrl.text;
 
-                  if (context.mounted) {
-    Navigator.pop(context);
-  }
+                  // Usa o provider para atualizar
+                  final provider = Provider.of<CardapioProvider>(context, listen: false);
+                  await provider.atualizar(item);
+
+                  // Feedback visual
+                  messenger.showSnackBar(
+                    const SnackBar(content: Text("Item atualizado com sucesso")),
+                  );
+
+                  navigator.pop(true);
+                } catch (e) {
+                  messenger.showSnackBar(
+                    SnackBar(content: Text("Erro ao atualizar: $e")),
+                  );
+                }
               },
-              child: Text("Salvar alterações"),
-)
+              child: const Text("Salvar alterações"),
+            ),
           ],
         ),
       ),
