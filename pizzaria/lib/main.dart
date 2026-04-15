@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'screens/home_page.dart';
-import 'screens/novo_item_page.dart';
+import 'ui/screens/home_page.dart';
+import 'ui/screens/novo_item_page.dart';
 import 'providers/cardapio_provider.dart'; 
 
 void main() {
